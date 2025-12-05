@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget id="labull.photoalbumuploader.PhotoAlbumUploader" pluginWidget="true" offlineCapable="true"
+        supportedPlatform="Web"
+        xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
+    <name>Photo Album Uploader</name>
+    <description>My widget description</description>
+    <icon/>
+    <properties>
+        <propertyGroup caption="General">
+            <property key="entityList" type="datasource" isList="true" required="true">
+                <caption>实体列表</caption>
+                <description>存储上传照片的实体列表数据源。配置说明：1) 在页面上创建一个数据源（Data Source），选择继承自 System.FileDocument 的实体类型（如 EntryImage）。2) 将此数据源绑定到此属性。3) 如果无法自动获取实体类型，请在下方"实体类型"属性中手动填写实体类型名称（如：EntryImage）。此列表可以在其他组件和微流中通过数据源访问，也可以作为微流的入参使用（类似于 DataGrid2 的选中列表）。在微流中，选择数据源时选择小部件的 entityList 即可访问图片列表。在页面上，可以将此列表绑定到按钮或其他组件的微流入参。注意：数据源可以绑定到持久化或非持久化实体，取决于您在页面或微流中配置的数据源类型。重要：选择的实体类型必须继承自 System.FileDocument，小部件会使用 mx.data.saveDocument API 将文件保存到实体中。</description>
+            </property>
+            <property key="onUploadAction" type="action" dataSource="entityList" required="true">
+                <caption>上传动作</caption>
+                <description>点击上传按钮后执行的动作。在微流中，可以通过数据源访问 entityList（选择数据源时选择小部件的 entityList，获取图片列表，类型为 ListValue）。entityList 包含所有已上传图片的实体记录，以列表（List）形式返回。重要提示：entityList 已通过 dataSource 属性链接到此动作，在微流中可以直接通过数据源访问图片列表（类似于 DataGrid2 的选中列表）。新创建的实体会自动出现在 entityList 中，并可以通过数据源传递给微流。在微流中，选择数据源时选择小部件的 entityList，即可获取包含所有上传图片实体的列表（ListValue 类型）。</description>
+            </property>
+            <property key="maxFiles" type="integer" defaultValue="10">
+                <caption>最大文件数</caption>
+                <description>允许上传的最大照片数量</description>
+            </property>
+            <property key="entityType" type="string" required="false">
+                <caption>实体类型（推荐配置）</caption>
+                <description>要创建的实体类型名称（例如：EntryImage、Photo）。强烈建议手动填写此属性，以确保小部件能正确创建实体。如果未配置，小部件会尝试从 entityList 数据源中自动获取实体类型，但如果数据源为空或配置不正确，可能会失败。填写格式：如果实体名称是 EntryImage，填写：EntryImage。如果实体名称是 Photo，填写：Photo。注意：只需填写实体名称，不需要填写模块名称或路径。</description>
+            </property>
+            <property key="uploadMode" type="enumeration" defaultValue="both">
+                <caption>上传方式</caption>
+                <description>选择照片的上传方式：file（仅显示"选择照片"按钮）、camera（仅显示"拍照"按钮）、both（同时显示两个按钮）</description>
+                <enumerationValues>
+                    <enumerationValue key="file">选择照片</enumerationValue>
+                    <enumerationValue key="camera">拍照</enumerationValue>
+                    <enumerationValue key="both">两者都显示</enumerationValue>
+                </enumerationValues>
+            </property>
+        </propertyGroup>
+    </properties>
+</widget>
